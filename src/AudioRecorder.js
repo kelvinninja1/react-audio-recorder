@@ -162,8 +162,9 @@ class AudioRecorder extends Component {
 
   render() {
     const strings = this.props.strings;
+    const { removeBtn, downloadBtn, playBtn } = this.props.classNames;
 
-    let buttonText, buttonClass = ['AudioRecorder-button'], audioButtons;
+    let buttonText, buttonClass = [playBtn], audioButtons;
     let clickHandler;
     if(this.state.audio) {
       buttonClass.push('hasAudio');
@@ -178,12 +179,12 @@ class AudioRecorder extends Component {
       }
 
       audioButtons = [
-        <button key="remove" className="AudioRecorder-remove" onClick={this.removeAudio.bind(this)}>{strings.remove}</button>
+        <button key="remove" className={removeBtn} onClick={this.removeAudio.bind(this)}>{strings.remove}</button>
       ];
 
       if(this.props.download) {
         audioButtons.push(
-          <button key="download" className="AudioRecorder-download" onClick={this.downloadAudio.bind(this)}>{strings.download}</button>
+          <button key="download" className={downloadBtn} onClick={this.downloadAudio.bind(this)}>{strings.download}</button>
         );
       }
     } else {
@@ -213,6 +214,11 @@ class AudioRecorder extends Component {
 
 AudioRecorder.propTypes = {
   audio: PropTypes.instanceOf(Blob),
+  classNames: {
+    removeBtn: PropTypes.string,
+    downloadBtn: PropTypes.string,
+    playBtn: PropTypes.string
+  },
   download: PropTypes.bool,
   loop: PropTypes.bool,
 
@@ -235,7 +241,11 @@ AudioRecorder.propTypes = {
 
 AudioRecorder.defaultProps = {
   loop: false,
-  
+  classNames: {
+    removeBtn: 'AudioRecorder-remove',
+    downloadBtn: 'AudioRecorder-download',
+    playBtn: 'AudioRecorder-button'
+  },
   strings: {
     play: '🔊 Play',
     playing: '❚❚ Playing',
